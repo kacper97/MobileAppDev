@@ -27,6 +27,10 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
 
     app = application as MainApp
 
+    chooseImage.setOnClickListener {
+      info ("Select image")
+    }
+
     if (intent.hasExtra("placemark_edit")) {
       edit = true
       placemark = intent.extras.getParcelable<PlacemarkModel>("placemark_edit")

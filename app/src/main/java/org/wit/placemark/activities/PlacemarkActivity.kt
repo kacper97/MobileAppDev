@@ -11,6 +11,7 @@ import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
 import org.wit.placemark.R
 import org.wit.placemark.helpers.readImage
+import org.wit.placemark.helpers.readImageFromPath
 import org.wit.placemark.helpers.showImagePicker
 import org.wit.placemark.main.MainApp
 import org.wit.placemark.models.PlacemarkModel
@@ -41,6 +42,7 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
       placemarkTitle.setText(placemark.title)
       description.setText(placemark.description)
       btnAdd.setText(R.string.save_placemark)
+      placemarkImage.setImageBitmap(readImageFromPath(this, placemark.image))
     }
 
     btnAdd.setOnClickListener() {

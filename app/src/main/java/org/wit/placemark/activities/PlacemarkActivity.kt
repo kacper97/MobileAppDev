@@ -18,7 +18,7 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
   lateinit var app: MainApp
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    var edit=false
+    var edit = false
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_placemark)
     toolbarAdd.title = title
@@ -28,7 +28,7 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
     app = application as MainApp
 
     if (intent.hasExtra("placemark_edit")) {
-      edit=true
+      edit = true
       placemark = intent.extras.getParcelable<PlacemarkModel>("placemark_edit")
       placemarkTitle.setText(placemark.title)
       description.setText(placemark.description)
@@ -38,31 +38,33 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
     btnAdd.setOnClickListener() {
       placemark.title = placemarkTitle.text.toString()
       placemark.description = description.text.toString()
-      if (placemark.title.isNotEmpty()) {
+      if (placemark.title.isEmpty()) {
         toast(R.string.enter_placemark_title)
-      }else{
-        if(edit){
-          app.placemarks.update(placemark.copy()
-        }else{
-      app.placemarks.create(placemark.copy())
+      } else {
+        if (edit) {
+          app.placemarks.update(placemark.copy())
+        } else {
+          app.placemarks.create(placemark.copy())
         }
       }
-    info("add Button Pressed: $placemarkTitle")
-    setResult(AppCompatActivity.RESULT_OK)
-    finish()
-  }
-
-  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-    menuInflater.inflate(R.menu.menu_placemark, menu)
-    return super.onCreateOptionsMenu(menu)
-  }
-
-  override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-    when (item?.itemId) {
-      R.id.item_cancel -> {
-        finish()
-      }
+      info("add Button Pressed: $placemarkTitle")
+      setResult(AppCompatActivity.RESULT_OK)
+      finish()
     }
-    return super.onOptionsItemSelected(item)
   }
-}
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+      menuInflater.inflate(R.menu.menu_placemark, menu)
+      return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+      when (item?.itemId) {
+        R.id.item_cancel -> {
+          finish()
+        }
+      }
+      return super.onOptionsItemSelected(item)
+    }
+  }
+

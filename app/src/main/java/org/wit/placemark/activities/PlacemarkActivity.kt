@@ -43,7 +43,11 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
       description.setText(placemark.description)
       btnAdd.setText(R.string.save_placemark)
       placemarkImage.setImageBitmap(readImageFromPath(this, placemark.image))
+      if(placemark.image!=null){
+        chooseImage.setText(R.string.change_placemark_image)
+      }
     }
+
 
     btnAdd.setOnClickListener() {
       placemark.title = placemarkTitle.text.toString()
@@ -84,6 +88,7 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
         if(data !=null){
           placemark.image=data.getData().toString()
           placemarkImage.setImageBitmap(readImage(this,resultCode,data))
+          chooseImage.setText(R.string.change_placemark_image)
         }
       }
     }

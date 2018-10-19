@@ -9,11 +9,11 @@ import org.wit.placemark.models.PlacemarkStore
 
 class MainApp : Application(), AnkoLogger {
 
-  lateinit var placemarks: PlacemarkStore
+  lateinit var placemarks:PlacemarkStore
 
   override fun onCreate() {
     super.onCreate()
-    placemarks = PlacemarkJSONStore()
+    placemarks = PlacemarkJSONStore(applicationContext)
     info("Placemark started")
   }
 }

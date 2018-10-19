@@ -15,7 +15,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import org.wit.placemark.R
 import org.wit.placemark.models.Location
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerDragListener{
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener{
 
   private lateinit var map: GoogleMap
   var location = Location()
@@ -24,6 +24,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
   }
 
   override fun onMarkerDrag(marker: Marker) {
+  }
+
+  override fun onMarkerClick(marker:Marker):Boolean{
+    val loc = LatLng(location.lat, location.lng)
+    marker.setSnippet("GPS: " +loc.toString())
+    return false
   }
 
   override fun onMarkerDragEnd(marker: Marker) {
@@ -52,6 +58,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
         .position(loc)
     map.addMarker(options)
     map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom))
+    map.setOnMarkerClickListener(this)
   }
 
   override fun onBackPressed() {

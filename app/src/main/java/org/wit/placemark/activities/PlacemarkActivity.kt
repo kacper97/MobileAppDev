@@ -79,6 +79,12 @@ class PlacemarkActivity : AppCompatActivity(), AnkoLogger {
       setResult(AppCompatActivity.RESULT_OK)
       finish()
     }
+
+    btnDelete.setOnClickListener(){
+      app.placemarks.delete(placemark.copy())
+      setResult(AppCompatActivity.RESULT_OK)
+      finish()
+    }
   }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

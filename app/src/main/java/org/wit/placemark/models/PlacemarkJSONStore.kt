@@ -28,6 +28,11 @@ class PlacemarkJSONStore : PlacemarkStore, AnkoLogger {
     }
   }
 
+  override fun delete(placemark: PlacemarkModel){
+    placemarks.remove(placemark)
+    serialize()
+  }
+
   override fun findAll(): MutableList<PlacemarkModel> {
     return placemarks
   }
@@ -40,7 +45,16 @@ class PlacemarkJSONStore : PlacemarkStore, AnkoLogger {
 
 
   override fun update(placemark: PlacemarkModel) {
-    // todo
+    var foundPlacemark : PlacemarkModel ?= placemarks.find{p ->p.id == placemark.id}
+    if(foundPlacemark != null){
+      foundPlacemark.title = placemark.title
+      foundPlacemark.description = placemark.description
+      foundPlacemark.image = placemark.image
+      foundPlacemark.lat = placemark.lat
+      foundPlacemark.lng = placemark.lng
+      foundPlacemark.zoom =placemark.zoom
+      serialize()
+    }
   }
 
   private fun serialize() {

@@ -1,3 +1,15 @@
+package org.wit.placemark.views.placemark
+
+import android.content.Intent
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import kotlinx.android.synthetic.main.activity_placemark.*
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.toast
+import org.wit.placemark.R
+import org.wit.placemark.helpers.readImageFromPath
+import org.wit.placemark.models.PlacemarkModel
 import org.wit.placemark.views.BaseView
 
 class PlacemarkView : BaseView(), AnkoLogger {
@@ -59,3 +71,4 @@ class PlacemarkView : BaseView(), AnkoLogger {
     presenter.doCancel()
   }
 }
+

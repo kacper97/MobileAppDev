@@ -40,6 +40,11 @@ class PlacemarkMemStore : PlacemarkStore, AnkoLogger {
     }
   }
 
+  override fun findById(id:Long):PlacemarkModel?{
+    val foundPlacemark:PlacemarkModel? = placemarks.find{it.id == id}
+    return foundPlacemark
+  }
+
   internal fun logAll() {
     placemarks.forEach { info("${it}") }
   }

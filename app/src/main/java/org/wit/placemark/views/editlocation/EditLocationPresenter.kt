@@ -9,7 +9,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import org.wit.placemark.models.Location
 
-class EditLocationPresenter(val activity: EditLocationActivity) {
+class EditLocationPresenter(val activity: EditLocationView) {
 
   var location = Location()
 

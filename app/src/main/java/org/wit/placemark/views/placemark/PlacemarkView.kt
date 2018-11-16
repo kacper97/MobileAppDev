@@ -1,18 +1,6 @@
-package org.wit.placemark.views.placemark
+import org.wit.placemark.views.BaseView
 
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_placemark.*
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.toast
-import org.wit.placemark.R
-import org.wit.placemark.helpers.readImageFromPath
-import org.wit.placemark.models.PlacemarkModel
-
-class PlacemarkView : AppCompatActivity(), AnkoLogger {
+class PlacemarkView : BaseView(), AnkoLogger {
 
   lateinit var presenter: PlacemarkPresenter
   var placemark = PlacemarkModel()
@@ -20,17 +8,17 @@ class PlacemarkView : AppCompatActivity(), AnkoLogger {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_placemark)
-    toolbarAdd.title = title
-    setSupportActionBar(toolbarAdd)
 
-    presenter = PlacemarkPresenter(this)
+    init(toolbarAdd)
+
+    presenter = initPresenter (PlacemarkPresenter(this)) as PlacemarkPresenter
 
     chooseImage.setOnClickListener { presenter.doSelectImage() }
 
     placemarkLocation.setOnClickListener { presenter.doSetLocation() }
   }
 
-  fun showPlacemark(placemark: PlacemarkModel) {
+  override fun showPlacemark(placemark: PlacemarkModel) {
     placemarkTitle.setText(placemark.title)
     description.setText(placemark.description)
     placemarkImage.setImageBitmap(readImageFromPath(this, placemark.image))

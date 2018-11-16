@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.MapsActivity"
+            android:name=".activities.EditLocationActivity"
             android:label="@string/title_activity_maps" />
         <activity
             android:name=".activities.PlacemarkMapsActivity"

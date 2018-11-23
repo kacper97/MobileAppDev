@@ -96,5 +96,3 @@ class PlacemarkView : BaseView(), AnkoLogger {
     mapView.onSaveInstanceState(outState)
   }
 }
-}
-

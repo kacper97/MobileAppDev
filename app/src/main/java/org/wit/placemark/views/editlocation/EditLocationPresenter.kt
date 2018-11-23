@@ -1,3 +1,5 @@
+package org.wit.placemark.views.editlocation
+
 import android.content.Intent
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap

@@ -6,7 +6,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.Marker
 import org.wit.placemark.R
 import org.wit.placemark.views.BaseView
-import org.wit.placemark.views.editlocation.EditLocationPresenter
 
 class EditLocationView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener {
 

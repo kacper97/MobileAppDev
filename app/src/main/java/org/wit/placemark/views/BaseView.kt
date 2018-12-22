@@ -3,12 +3,14 @@ package org.wit.placemark.views
 import android.content.Intent
 
 import android.os.Parcelable
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import com.google.firebase.auth.FirebaseAuth
 import org.jetbrains.anko.AnkoLogger
 
 import org.wit.placemark.models.PlacemarkModel
 import org.wit.placemark.views.editlocation.EditLocationView
+import org.wit.placemark.views.login.LoginView
 import org.wit.placemark.views.map.PlacemarkMapView
 import org.wit.placemark.views.placemark.PlacemarkView
 import org.wit.placemark.views.placemarklist.PlacemarkListView
@@ -17,7 +19,7 @@ val IMAGE_REQUEST = 1
 val LOCATION_REQUEST = 2
 
 enum class VIEW {
-  LOCATION, PLACEMARK, MAPS, LIST
+  LOCATION, PLACEMARK, MAPS, LIST, LOGIN
 }
 
 open abstract class BaseView() : AppCompatActivity(), AnkoLogger {
@@ -31,6 +33,7 @@ open abstract class BaseView() : AppCompatActivity(), AnkoLogger {
       VIEW.PLACEMARK -> intent = Intent(this, PlacemarkView::class.java)
       VIEW.MAPS -> intent = Intent(this, PlacemarkMapView::class.java)
       VIEW.LIST -> intent = Intent(this, PlacemarkListView::class.java)
+      VIEW.LOGIN -> intent = Intent(this, LoginView::class.java)
     }
     if (key != "") {
       intent.putExtra(key, value)
@@ -43,9 +46,14 @@ open abstract class BaseView() : AppCompatActivity(), AnkoLogger {
     return presenter
   }
 
-  fun init(toolbar: Toolbar) {
+  fun init(toolbar: Toolbar, upEnabled: Boolean) {
     toolbar.title = title
     setSupportActionBar(toolbar)
+    supportActionBar?.setDisplayHomeAsUpEnabled(upEnabled)
+    val user = FirebaseAuth.getInstance().currentUser
+    if (user != null) {
+      toolbar.title = "${title}: ${user.email}"
+    }
   }
 
   override fun onDestroy() {

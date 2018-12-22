@@ -8,7 +8,6 @@ import kotlinx.android.synthetic.main.activity_placemark.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.toast
 import org.wit.placemark.R
-import org.wit.placemark.helpers.readImageFromPath
 import org.wit.placemark.models.PlacemarkModel
 import org.wit.placemark.views.BaseView
 
@@ -21,29 +20,28 @@ class PlacemarkView : BaseView(), AnkoLogger {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_placemark)
 
-    init(toolbarAdd)
+    init(toolbarAdd, true)
 
     presenter = initPresenter (PlacemarkPresenter(this)) as PlacemarkPresenter
 
-    chooseImage.setOnClickListener { presenter.doSelectImage() }
-
-    //placemarkLocation.setOnClickListener { presenter.doSetLocation() }
-
+    mapView.onCreate(savedInstanceState);
     mapView.getMapAsync {
       presenter.doConfigureMap(it)
       it.setOnMapClickListener { presenter.doSetLocation() }
     }
+
+    chooseImage.setOnClickListener { presenter.doSelectImage() }
   }
 
   override fun showPlacemark(placemark: PlacemarkModel) {
     placemarkTitle.setText(placemark.title)
     description.setText(placemark.description)
-    placemarkImage.setImageBitmap(readImageFromPath(this, placemark.image))
+    Glide.with(this).load(placemark.image).into(placemarkImage);
     if (placemark.image != null) {
       chooseImage.setText(R.string.change_placemark_image)
     }
-    lat.setText("%.6f".format(placemark.lat))
-    lng.setText("%.6f".format(placemark.lng))
+    lat.setText("%.6f".format(placemark.location.lat))
+    lng.setText("%.6f".format(placemark.location.lng))
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -96,7 +94,7 @@ class PlacemarkView : BaseView(), AnkoLogger {
   override fun onResume() {
     super.onResume()
     mapView.onResume()
-    presenter.doRestartLocationUpdates()
+    presenter.doResartLocationUpdates()
   }
 
   override fun onSaveInstanceState(outState: Bundle?) {

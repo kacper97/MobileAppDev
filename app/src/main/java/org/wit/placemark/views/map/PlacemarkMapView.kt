@@ -1,12 +1,13 @@
 package org.wit.placemark.views.map
 
 import android.os.Bundle
+import com.bumptech.glide.Glide
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
+import kotlinx.android.synthetic.main.activity_login.*
 import org.wit.placemark.R
 import kotlinx.android.synthetic.main.activity_placemark_map.*
 import kotlinx.android.synthetic.main.content_placemark_map.*
-import org.wit.placemark.helpers.readImageFromPath
 import org.wit.placemark.models.PlacemarkModel
 import org.wit.placemark.views.BaseView
 
@@ -18,7 +19,7 @@ class PlacemarkMapView : BaseView(), GoogleMap.OnMarkerClickListener {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_placemark_map)
-    super.init(toolbarMaps)
+    super.init(toolbar, true)
 
     presenter = initPresenter (PlacemarkMapPresenter(this)) as PlacemarkMapPresenter
 
@@ -33,7 +34,7 @@ class PlacemarkMapView : BaseView(), GoogleMap.OnMarkerClickListener {
   override fun showPlacemark(placemark: PlacemarkModel) {
     currentTitle.text = placemark.title
     currentDescription.text = placemark.description
-    imageView.setImageBitmap(readImageFromPath(this, placemark.image))
+    Glide.with(this).load(placemark.image).into(imageView);
   }
 
   override fun showPlacemarks(placemarks: List<PlacemarkModel>) {
